@@ -1,5 +1,10 @@
 package com.xinre.base.pojo;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,64 +15,24 @@ import javax.persistence.Table;
  * @author xinre
  * @date 2019/1/16 17:43
  */
+
+@Data
 @Entity
-@Table(name="t_label")
+@Table(name = "ts_t_label")
 public class Label {
 
     @Id
+    @Column(name = "id_")
     private String id;
-    private String labelName;
+    @Column(name = "name_")
+    private String name;
+    @Column(name = "state_")
     private String state;
+    @Column(name = "count_")
     private Long count;
+    @Column(name = "fans_")
     private Long fans;
+    @Column(name = "recommend_")
     private String recommend;
 
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getLabelName() {
-        return labelName;
-    }
-
-    public void setLabelName(String labelName) {
-        this.labelName = labelName;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public Long getCount() {
-        return count;
-    }
-
-    public void setCount(Long count) {
-        this.count = count;
-    }
-
-    public Long getFans() {
-        return fans;
-    }
-
-    public void setFans(Long fans) {
-        this.fans = fans;
-    }
-
-    public String getRecommend() {
-        return recommend;
-    }
-
-    public void setRecommend(String recommend) {
-        this.recommend = recommend;
-    }
 }
