@@ -1,7 +1,7 @@
 package com.xinre.redis.util;
 
+import com.xinre.common.util.IdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Pipeline;
@@ -18,19 +18,22 @@ public class SimpleRateLimiter {
     @Autowired
     private Jedis jedis;
 
-    public SimpleRateLimiter(Jedis jedis) {
+    @Autowired
+    private IdWorker idWorker;
+
+    public SimpleRateLimiter(Jedis jedis, IdWorker idWorker) {
         this.jedis = jedis;
+        this.idWorker = idWorker;
     }
 
     public boolean isActionAllowed(String userId, String actionKey, int period, int maxCount) throws IOException {
         String key = String.format("hist:%s:%s", userId, actionKey);
         long nowTs = System.currentTimeMillis();
-        System.out.println("key = " + key + "  ||  value = " + nowTs);
+        String member = String.valueOf(idWorker.nextId());
+        System.out.println("key = " + key + "  ||  score = " + nowTs + "  ||  value = " + member);
         Pipeline pipe = jedis.pipelined();
-        Response<String> multi = pipe.multi();
-        
-
-        pipe.zadd(key, nowTs, "" + nowTs);
+        pipe.multi();
+        pipe.zadd(key, nowTs, member);
         pipe.zremrangeByScore(key, 0, nowTs - period * 1000);
         Response<Long> count = pipe.zcard(key);
         pipe.expire(key, period + 1);
@@ -41,7 +44,7 @@ public class SimpleRateLimiter {
 
     public static void main(String[] args) throws IOException {
         JedisPool jedisPool = new JedisPool("192.168.100.109", 6379);
-        SimpleRateLimiter limiter = new SimpleRateLimiter(jedisPool.getResource());
+        SimpleRateLimiter limiter = new SimpleRateLimiter(jedisPool.getResource(), new IdWorker());
         for (int i = 0; i < 20; i++) {
             System.out.println("i = " + i);
             System.out.println(limiter.isActionAllowed("laoqian", "reply", 60, 5));

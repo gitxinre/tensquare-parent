@@ -1,5 +1,6 @@
 package com.xinre.redis;
 
+import com.xinre.common.util.IdWorker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +35,11 @@ public class RedisApplication {
     @Bean
     public JedisPool getJedisPool() {
         return new JedisPool("127.0.0.1", 6379);
+    }
+
+    @Bean
+    public IdWorker getIdWork() {
+        return new IdWorker();
     }
 
 
