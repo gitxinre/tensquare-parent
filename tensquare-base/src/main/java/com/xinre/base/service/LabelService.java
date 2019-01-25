@@ -6,8 +6,8 @@ import com.xinre.common.util.IdWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -29,6 +29,7 @@ public class LabelService {
 
     // c
     public void save(Label label) {
+        label.setId(String.valueOf(idWorker.nextId()));
         labelDao.save(label);
     }
 

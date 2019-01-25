@@ -10,6 +10,9 @@
     <modules>
         <module>tensquare-common</module>
         <module>tensquare-base</module>
+        <module>tensquare-recruit</module>
+        <module>tensquare-mq</module>
+        <module>tensquare-redis</module>
     </modules>
 
     <packaging>pom</packaging>
