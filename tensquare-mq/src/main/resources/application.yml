@@ -1,3 +1,5 @@
+server:
+  port: 9002
 #
 spring:
   rabbitmq:
@@ -5,5 +7,4 @@ spring:
     port: 5672
     username: guest
     password: guest
-server:
-  port: 8099
+

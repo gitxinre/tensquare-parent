@@ -10,6 +10,9 @@ import redis.clients.jedis.Response;
 import java.io.IOException;
 
 /**
+ * 简单限流算法
+ * 使用滑动时间窗口（period）实现，缺点：记录时间窗口内所有的行为记录
+ *
  * @author xinre
  * @date 2019/1/25 11:28
  */
@@ -47,7 +50,7 @@ public class SimpleRateLimiter {
         SimpleRateLimiter limiter = new SimpleRateLimiter(jedisPool.getResource(), new IdWorker());
         for (int i = 0; i < 20; i++) {
             System.out.println("i = " + i);
-            System.out.println(limiter.isActionAllowed("laoqian", "reply", 60, 5));
+            System.out.println(limiter.isActionAllowed("laoqian", "reply", 5, 5));
 
             System.out.println(" ================over================= ");
         }

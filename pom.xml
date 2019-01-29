@@ -13,6 +13,7 @@
         <module>tensquare-recruit</module>
         <module>tensquare-mq</module>
         <module>tensquare-redis</module>
+        <module>tensquare-io</module>
     </modules>
 
     <packaging>pom</packaging>
