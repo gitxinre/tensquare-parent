@@ -11,7 +11,7 @@ import java.io.IOException;
  * @date 2019/1/29 14:04
  */
 @Slf4j
-public class MyWriter {
+public class MyFileWriter {
 
     public static void main(String[] args) throws IOException {
 

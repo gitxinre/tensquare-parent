@@ -5,23 +5,27 @@ import lombok.extern.slf4j.Slf4j;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.nio.charset.Charset;
 
 /**
  * @author xinre
  * @date 2019/1/29 15:23
  */
 @Slf4j
-public class MyReader {
+public class MyFileReader {
 
     public static void main(String[] args) throws IOException {
-        @Cleanup FileReader fileReader = null;
 
-        fileReader = new FileReader("G:\\a平台2.0\\mfl\\访问地址.txt");
+        @Cleanup FileReader fileReader1 = null;
 
+        @Cleanup BufferedReader fileReader = null;
 
+        // 乱码
+        fileReader1 = new FileReader("G:\\a平台2.0\\mfl\\访问地址.txt");
+
+        // 不乱吗
+        fileReader = new BufferedReader(new InputStreamReader(new FileInputStream("tensquare-common\\src\\main\\java\\com\\xinre\\common\\util\\IdWorker.java"), Charset.forName("utf-8")));
 
         // 单个读取
         /*while (true) {

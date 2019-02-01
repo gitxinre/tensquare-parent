@@ -1,9 +1,6 @@
 package com.xinre.io;
 
 import lombok.Cleanup;
-import lombok.extern.java.Log;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileReader;
