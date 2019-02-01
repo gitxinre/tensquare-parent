@@ -23,9 +23,29 @@ public class XrJedisPool {
     @Autowired
     private JedisPool jedisPool;
 
-    public void execute(CallWithJedis caller) {
+    void execute(CallWithJedis caller) {
         try (Jedis jedis = jedisPool.getResource()) {
             caller.call(jedis);
+        }
+    }
+
+    public void executeTryAgain(CallWithJedis caller) {
+        Jedis jedis = jedisPool.getResource();
+        try {
+            caller.call(jedis);
+        } catch (Exception e) {
+            log.info("Jedis 异常进行重试……");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+            caller.call(jedis);
+            log.info("Jedis 重试成功……");
+        }finally {
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 

@@ -10,10 +10,30 @@ import redis.clients.jedis.JedisPool;
 public class XrJedisPoolTest {
 
     public static void main(String[] args) {
+        testExecuteTryAgain();
+    }
+
+    public static void testExecute() {
         XrJedisPool jedis = new XrJedisPool(new JedisPool("192.168.100.109", 6379));
         XrHolder<Long> count = new XrHolder<>();
         Long l = 0L;
         jedis.execute(new CallWithJedis() {
+            @Override
+            public void call(Jedis jedis) {
+                /*jedis.zadd("lv", 31, "yf");
+                jedis.zadd("lv", 32, "xy");*/
+                Long lv = jedis.zcard("lv");
+                count.setValue(lv);
+            }
+        });
+        System.out.println("count.getValue() = " + count.getValue());
+    }
+
+    public static void testExecuteTryAgain() {
+        XrJedisPool jedis = new XrJedisPool(new JedisPool("192.168.100.109", 6379));
+        XrHolder<Long> count = new XrHolder<>();
+        Long l = 0L;
+        jedis.executeTryAgain(new CallWithJedis() {
             @Override
             public void call(Jedis jedis) {
                 /*jedis.zadd("lv", 31, "yf");
