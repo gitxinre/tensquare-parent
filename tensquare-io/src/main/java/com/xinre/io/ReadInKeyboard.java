@@ -50,6 +50,9 @@ public class ReadInKeyboard {
         PrintStream out = System.out;
         PrintWriter out1 = new PrintWriter(new FileWriter("G:\\SystemInfo.txt"), true);
 
+
+
+
         Properties properties = System.getProperties();
         properties.list(out1);
     }
